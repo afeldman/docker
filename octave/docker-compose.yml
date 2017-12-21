@@ -1,0 +1,9 @@
+version: '2'
+
+services:
+  octave:
+    build: .
+    volumes:
+      - ./octave_data:/code
+    ports:
+      - "8888:8888"
