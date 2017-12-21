@@ -1,0 +1,20 @@
+backend:
+  restart: always
+  image: registry 
+  ports: 
+    - 5000:5000 
+  volumes: 
+    - /opt/docker/registry:/var/lib/registry
+  environment: 
+    REGISTRY_STORAGE_DELETE_ENABLED: 'true'
+
+frontend:
+  restart: always
+  image: konradkleine/docker-registry-frontend:v2
+  links:
+    - backend
+  ports: 
+    - 11080:80 
+  environment: 
+    ENV_DOCKER_REGISTRY_HOST: backend
+    ENV_DOCKER_REGISTRY_PORT: 5000
