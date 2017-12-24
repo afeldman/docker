@@ -24,7 +24,7 @@ RUN apk add --no-cache \
 RUN pip install --upgrade pip
 
 #install autolab_core
-RUN pip install --no-cach-dir autolab_core
+RUN pip install --no-cache-dir autolab_core
 
 RUN rm -rf /tmp/pip \
     && rm -rf /root/.cache
