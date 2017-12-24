@@ -24,12 +24,7 @@ RUN apk add --no-cache \
 RUN pip install --upgrade pip
 
 #install autolab_core
-RUN git clone https://github.com/BerkeleyAutomation/autolab_core.git \
-    && cd autolab_core\
-    && pip install --no-cache-dir -r requirements.txt \
-    && python setup.py develop\
-    && cd ../ \
-    && rm -Rf autolab_core
+RUN pip install --no-cach-dir autolab_core
 
 RUN rm -rf /tmp/pip \
     && rm -rf /root/.cache
@@ -44,5 +39,3 @@ RUN apk --no-cache del\
 
 ENTRYPOINT ["python"]
 CMD ["/bin/bash"]
-
-ENV DEBIAN_FRONTEND teletype
