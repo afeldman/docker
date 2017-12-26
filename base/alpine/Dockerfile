@@ -1,7 +1,10 @@
 FROM alpine:latest
 
-label maintainer="anton.feldmann@gmail.com"
+LABEL maintainer="anton.feldmann@gmail.com"
+LABEL version="0.1"
+LABEL description="This is my basic alpine image based on\
+ alpine:latest. This image includes just an ash shell."
 
-RUN apk add --no-cache bash
+RUN apk add --update --no-cache ash \
+	&& rm -rf /var/cache/apk/*
 
-ENTRYPOINT ["/bin/bash"]
