@@ -4,7 +4,8 @@ LABEL maintainer="anton.feldmann@gmail.com"
 
 USER root
 
-RUN apk update && apk add --update wget alpine-sdk perl
+RUN apk update && apk add --update wget alpine-sdk perl \
+ && rm -rf /var/cache/apk/*
 
 COPY build_nvidia.sh /usr/bin
 
