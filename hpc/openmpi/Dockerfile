@@ -1,4 +1,4 @@
-FROM alpine:latest
+FROM afeldman/alpine:latest
 
 LABEL MAINTAINER anton Feldmann <anton.feldmann@gmail.com>
 

@@ -1,4 +1,4 @@
-FROM alpine:latest
+FROM afeldman/alpine:latest
 
 LABEL maintainer="anton.feldmann@gmail.com"
 
