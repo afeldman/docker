@@ -1,9 +1,12 @@
-FROM alpine:latest
+ARG BASE alpine:latest
+
+FROM $BASE
 
 LABEL maintainer="anton.feldmann@gmail.com"
 LABEL version="0.1"
 LABEL description="This is my basic alpine image based on\
  alpine:latest. This image includes just an ash shell."
 
+apk --no-cache add ash \
 	&& rm -rf /var/cache/apk/*
 
