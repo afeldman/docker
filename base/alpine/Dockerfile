@@ -5,6 +5,5 @@ LABEL version="0.1"
 LABEL description="This is my basic alpine image based on\
  alpine:latest. This image includes just an ash shell."
 
-RUN apk add --update --no-cache ash \
 	&& rm -rf /var/cache/apk/*
 
