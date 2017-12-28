@@ -1,7 +1,5 @@
 !/usr/bin/env sh
 
-wget http://developer.download.nvidia.com/compute/cuda/7.5/Prod/local_installers/cuda_7.5.18_linux.run
-
 chmod +x cuda_*_linux.run
 
 cuda_*_linux.run --tar mxvf
