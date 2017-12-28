@@ -1,8 +1,0 @@
-version: '2'
-
-services:
-  tensorflow-gpu:
-    restart: always
-    image: tensorflow/tensorflow:latest-gpu
-    ports:
-      - "8888:8888"
