@@ -1,0 +1,18 @@
+FROM afeldman/alpine:latest as builder
+
+WORKDIR /gentoo
+
+ARG DIST="https://ftp.heanet.ie/mirrors/gentoo/experimental/arm64/"
+ARG VERS="stage3-arm64-20171204.tar.bz2"
+
+RUN apk --no-cache add gnupg tar wget \
+ && wget "${DIST}/${VERS}" \
+ && tar xjpf "${VERS}" --xattrs --numeric-owner \
+ && sed -i -e 's/#rc_sys=""/rc_sys="docker"/g' etc/rc.conf \
+ && echo 'UTC' > etc/timezone
+
+FROM scratch
+
+WORKDIR /
+COPY --from=builder /gentoo/ /
+CMD ["/bin/bash"]
