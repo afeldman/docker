@@ -1,4 +1,4 @@
-!/usr/bin/env sh
+#!/bin/bash
 
 chmod +x cuda_*_linux.run
 
