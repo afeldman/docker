@@ -5,7 +5,7 @@ FROM ${BASE:-alpine:3.6}
 LABEL maintainer="anton.feldmann@gmail.com"
 LABEL version="0.1"
 LABEL description="This is my basic alpine image based on\
- alpine:latest. This image includes just an ash shell."
+ alpine. This image sets the timezone and builds the repository file."
 
 ARG VERSION=3.6
 
