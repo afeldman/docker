@@ -18,9 +18,9 @@ def os_walk(dir)
 end
 
 def run_docker(name, tag, fn, fp, error)
-    p "run:\tdocker build -t \"afeldman/#{name}:#{tag}\" -f #{fn} #{fp}"
+    p "run:\tdocker build -t \"#{ENV["DOCKER_USER"]}/#{name}:#{tag}\" -f #{fn} #{fp}"
 
-    system "docker build -t \"afeldman/#{name}:#{tag}\" -f #{fn} #{fp}"
+    system "docker build -t \"${DOCKER_USER}/#{name}:#{tag}\" -f #{fn} #{fp}"
 
     if $?.exitstatus > 0
         error << name
@@ -29,7 +29,7 @@ def run_docker(name, tag, fn, fp, error)
 end
 
 if $0 == __FILE__
-
+  
   data = []
   error = []
   
