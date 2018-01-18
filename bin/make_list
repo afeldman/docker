@@ -17,10 +17,11 @@ end
 
 
 def run_docker(name, tag, fn, fp)
-  system "docker -t \"#{name}:#{tag}\" -f #{fn} #{fp}"
+  p "run:\tdocker build -t \"#{name}:#{tag}\" -f #{fn} #{fp}"
+  system "docker build -t \"#{name}:#{tag}\" -f #{fn} #{fp}"
 
   if $?.exitstatus > 0
-    puts "I failed to build docker #{dockername}, I am very sorry :'("
+    puts "I failed to build docker #{name}, I am very sorry :'("
   end
 end
 
@@ -47,7 +48,7 @@ if $0 == __FILE__
      p "build docker #{docker["name"]}..."
      p "using path #{docker["path"]}"
      
-     run_docker(docker['name'],docker['tag'],docker['docker_file'],docker['dir'])
+     run_docker(docker['name'],docker['tag'],docker['path'],docker['dir'])
    }
 
    File.open('../docker.list', 'w') {|f| f.write data.to_yaml }
