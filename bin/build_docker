@@ -3,6 +3,7 @@
 require 'pathname'
 require 'yaml'
 require 'parallel'
+require 'thread'
 
 def os_walk(dir)
   root = Pathname(dir)
@@ -16,42 +17,46 @@ def os_walk(dir)
   [root, files, dirs]
 end
 
+def run_docker(name, tag, fn, fp, error)
+    p "run:\tdocker build -t \"afeldman/#{name}:#{tag}\" -f #{fn} #{fp}"
 
-def run_docker(name, tag, fn, fp)
-  p "run:\tdocker build -t \"afeldman/#{name}:#{tag}\" -f #{fn} #{fp}"
-  system "docker build -t \"afeldman/#{name}:#{tag}\" -f #{fn} #{fp}"
+    system "docker build -t \"afeldman/#{name}:#{tag}\" -f #{fn} #{fp}"
 
-  if $?.exitstatus > 0
-    puts "I failed to build docker #{name}, I am very sorry :'("
-  end
+    if $?.exitstatus > 0
+        error << name
+        puts "I failed to build docker #{name}, I am very sorry :'("
+    end
 end
 
 if $0 == __FILE__
 
   data = []
+  error = []
   
-   root, files, dirs = os_walk('..')
+  root, files, dirs = os_walk('..')
 
-   files.each do |f|
-     if f.to_s.include? 'Dockerfile'
+  files.each do |f|
+    if f.to_s.include? 'Dockerfile'
 
-       name = f.dirname.each_filename.to_a.last
-       
-       data << { 'path' => f.to_s,
-                 'dir' => f.dirname.to_s,
-                 'docker_file' => f.basename.to_s,
-                 'name' => name,
-                 'tag' => ( f.extname == "" ? 'latest' : f.extname.to_s.gsub('.','') ) }
-     end
-   end
+      name = f.dirname.each_filename.to_a.last
+      
+      data << { 'path' => f.to_s,
+                'dir' => f.dirname.to_s,
+                'docker_file' => f.basename.to_s,
+                'name' => name,
+                'tag' => ( f.extname == "" ? 'latest' : f.extname.to_s.gsub('.','') ) }
+    end
+  end
 
-   File.open('../docker.list', 'w') {|f| f.write data.to_yaml }
-   
-   Parallel.map(data, in_processes: 4) { |docker|
-     p "build docker #{docker["name"]}..."
-     p "using path #{docker["path"]}"
-     
-     run_docker(docker['name'],docker['tag'],docker['path'],docker['dir'])
-   }
-   
+  File.open('../docker.list', 'w') {|f| f.write data.to_yaml }
+  
+  Parallel.map(data, in_processes: 4) { |docker|
+    p "build docker #{docker["name"]}..."
+    p "using path #{docker["path"]}"
+    
+    run_docker(docker['name'],docker['tag'],docker['path'],docker['dir'],error)
+  }
+
+  p error
+  
 end
