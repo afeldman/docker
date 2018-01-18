@@ -2,6 +2,7 @@
 
 require 'pathname'
 require 'yaml'
+require 'parallel'
 
 def os_walk(dir)
   root = Pathname(dir)
@@ -18,7 +19,7 @@ end
 
 def run_docker(name, tag, fn, fp)
   p "run:\tdocker build -t \"#{name}:#{tag}\" -f #{fn} #{fp}"
-  system "docker build -t \"#{name}:#{tag}\" -f #{fn} #{fp}"
+  system "docker build -t \"afeldman/#{name}:#{tag}\" -f #{fn} #{fp}"
 
   if $?.exitstatus > 0
     puts "I failed to build docker #{name}, I am very sorry :'("
@@ -44,7 +45,7 @@ if $0 == __FILE__
      end
    end
 
-   data.each { |docker|
+   Parallel.map(data, in_processes: 4) { |docker|
      p "build docker #{docker["name"]}..."
      p "using path #{docker["path"]}"
      
