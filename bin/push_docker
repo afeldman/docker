@@ -1,0 +1,5 @@
+#!/usr/bin/bash
+
+docker login --username=${DOCKER_USER} --password=${DOCKER_PASS} ${DOCKER_HOST}
+
+docker image -a | awk '{ print $1,$2 }' | grep ${DOCKER_USER} | awk '{print $1 }' | xargs -I {} docker push {}
