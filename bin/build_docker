@@ -18,7 +18,7 @@ end
 
 
 def run_docker(name, tag, fn, fp)
-  p "run:\tdocker build -t \"#{name}:#{tag}\" -f #{fn} #{fp}"
+  p "run:\tdocker build -t \"afeldman/#{name}:#{tag}\" -f #{fn} #{fp}"
   system "docker build -t \"afeldman/#{name}:#{tag}\" -f #{fn} #{fp}"
 
   if $?.exitstatus > 0
@@ -45,13 +45,13 @@ if $0 == __FILE__
      end
    end
 
+   File.open('../docker.list', 'w') {|f| f.write data.to_yaml }
+   
    Parallel.map(data, in_processes: 4) { |docker|
      p "build docker #{docker["name"]}..."
      p "using path #{docker["path"]}"
      
      run_docker(docker['name'],docker['tag'],docker['path'],docker['dir'])
    }
-
-   File.open('../docker.list', 'w') {|f| f.write data.to_yaml }
    
 end
