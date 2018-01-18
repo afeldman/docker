@@ -1,0 +1,55 @@
+#!/usr/bin/env ruby
+
+require 'pathname'
+require 'yaml'
+
+def os_walk(dir)
+  root = Pathname(dir)
+  files, dirs = [], []
+  Pathname(root).find do |path|
+    unless path == root
+      dirs << path if path.directory?
+      files << path if path.file?
+    end
+  end
+  [root, files, dirs]
+end
+
+
+def run_docker(name, tag, fn, fp)
+  system "docker -t \"#{name}:#{tag}\" -f #{fn} #{fp}"
+
+  if $?.exitstatus > 0
+    puts "I failed to build docker #{dockername}, I am very sorry :'("
+  end
+end
+
+if $0 == __FILE__
+
+  data = []
+  
+   root, files, dirs = os_walk('..')
+
+   files.each do |f|
+     if f.to_s.include? 'Dockerfile'
+
+       name = f.dirname.each_filename.to_a.last
+       
+       data << { 'path' => f.to_s,
+                 'dir' => f.dirname.to_s,
+                 'docker_file' => f.basename.to_s,
+                 'name' => name,
+                 'tag' => ( f.extname == "" ? 'latest' : f.extname.to_s.gsub('.','') ) }
+     end
+   end
+
+   data.each { |docker|
+     p "build docker #{docker["name"]}..."
+     p "using path #{docker["path"]}"
+     
+     run_docker(docker['name'],docker['tag'],docker['docker_file'],docker['dir'])
+   }
+
+   File.open('../docker.list', 'w') {|f| f.write data.to_yaml }
+   
+end
