@@ -5,6 +5,8 @@ require 'yaml'
 require 'parallel'
 require 'thread'
 
+$semaphore = Mutex.new
+
 def os_walk(dir)
   root = Pathname(dir)
   files, dirs = [], []
@@ -17,21 +19,24 @@ def os_walk(dir)
   [root, files, dirs]
 end
 
-def run_docker(name, tag, fn, fp, error)
+$error = []
+
+def run_docker(name, tag, fn, fp)
     p "run:\tdocker build -t \"#{ENV["DOCKER_USER"]}/#{name}:#{tag}\" -f #{fn} #{fp}"
 
     system "docker build -t \"${DOCKER_USER}/#{name}:#{tag}\" -f #{fn} #{fp}"
 
     if $?.exitstatus > 0
-        error << name
+      $semaphore.synchronize {
+        $error << name
         puts "I failed to build docker #{name}, I am very sorry :'("
+       }
     end
 end
 
 if $0 == __FILE__
   
   data = []
-  error = []
   
   root, files, dirs = os_walk('..')
 
@@ -54,9 +59,9 @@ if $0 == __FILE__
     p "build docker #{docker["name"]}..."
     p "using path #{docker["path"]}"
     
-    run_docker(docker['name'],docker['tag'],docker['path'],docker['dir'],error)
+    run_docker(docker['name'],docker['tag'],docker['path'],docker['dir'])
   }
 
-  p error
+  p $error
   
 end
