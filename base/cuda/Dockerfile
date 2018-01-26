@@ -3,6 +3,8 @@ FROM afeldman/alpine:latest
 LABEL maintainer="anton.feldmann@gmail.com"
 LABEL version="0.1"
 LABEL description="This is my basic cuda image based on alpine."
+LABEL com.nvidia.volumes.needed="nvidia_driver"
+
 
 RUN apk update \
  && apk add --update --no-cache wget alpine-sdk perl
@@ -14,10 +16,13 @@ ARG CUDA_VERSION="cuda-7.5"
 
 RUN wget ${CUDA_PATH}
 
-COPY build_nvidia.sh .
+COPY build_nvidia.sh ./build_nvidia.sh 
 
-RUN chmod 751 ./build_nvidia.sh \
-    && ./build_nvidia.sh
+RUN chmod 777 ./build_nvidia.sh ;\
+    ./build_nvidia.sh ;\
+    rm ./build_nvidia.sh
+
+RUN ls -la
 
 # Add to path
 ENV PATH=/usr/local/${CUDA_VERSION}/bin:$PATH
