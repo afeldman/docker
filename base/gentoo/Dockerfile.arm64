@@ -14,7 +14,9 @@ RUN apk --no-cache add gnupg tar wget \
 FROM scratch
 
 WORKDIR /
+
 COPY --from=builder /gentoo/ /
-RUN emerge-websync
+
+#RUN emerge--webrsync
 
 CMD ["/bin/bash"]
