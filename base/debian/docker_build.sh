@@ -1,8 +1,10 @@
 #!/bin/bash
 
-DOCKER_ID_USER="afeldman"
+if [[ $# -eq 1 ]] ; then
+    DOCKER_ID_USER=$1
 
-docker login
+    docker login
+fi
 
 builds=( stretch jessie latest )
 

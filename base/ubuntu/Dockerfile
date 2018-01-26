@@ -9,7 +9,10 @@ LABEL description="This is my basic ubuntu image based. \
  
 RUN apt-get update && \
     apt-get upgrade -y && \
-    apt-get install -y apt-utils && \
-    apt-get clean
+    apt-get install -y apt-utils bash && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
+ENV TERM='/bin/bash'
 
 RUN echo 'UTC' > /etc/timezone
