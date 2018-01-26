@@ -17,4 +17,5 @@ RUN chmod 777 ./build.sh && ./build.sh ${VERSION}
 RUN rm build.sh
 
 RUN apk update && \
-    apk upgrade
+    apk upgrade && \
+    apk add --no-cache bash 
