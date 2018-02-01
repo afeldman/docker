@@ -7,4 +7,4 @@ RUN chmod +x /usr/local/bin/jolici
 
 RUN php /usr/local/bin/jolici run
 
-CMD ["php","jolici.phar","run","-p","/project"]
+CMD ["php","/usr/local/bin/jolici","run","-p","/project"]
