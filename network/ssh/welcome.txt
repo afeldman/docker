@@ -1,0 +1,3 @@
+Welcome to Alpine SSH!
+
+For more information: https://github.com/afeldman/docker
