@@ -5,7 +5,8 @@ RUN apk add -U -v --no-cache \
     openldap-clients \
     openldap-back-hdb \
     openldap-back-bdb \
-    ldapvi
+    ldapvi\
+    openldap-back-mdb
 
 EXPOSE 389 636
 
