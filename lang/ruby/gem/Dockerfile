@@ -3,8 +3,8 @@ FROM afeldman/ruby:latest
 VOLUME /data/rubygems
 EXPOSE 9292
 
-ADD config/mirrorc ${GEM_HOME}/.mirrorrc
-ADD config/config.ru ${GEM_HOME}/mirror/config.ru
+ADD config/mirrorc /root/.gem/.mirrorrc
+ADD config/config.ru /root/.gem/mirror/config.ru
 
 RUN apk update --no-cache && \
     apk upgrade --no-cache && \
