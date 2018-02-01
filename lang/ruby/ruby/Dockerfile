@@ -1,10 +1,9 @@
-FROM alpine:edge
+FROM afeldman/alpine
 
-RUN echo http://mirror.yandex.ru/mirrors/alpine/edge/main > /etc/apk/repositories; \
-    echo http://mirror.yandex.ru/mirrors/alpine/edge/community >> /etc/apk/repositories;\
-    echo http://mirror.yandex.ru/mirrors/alpine/edge/testing >> /etc/apk/repositories
-
-RUN apk update && apk upgrade && apk --update add \
+#install requirements
+RUN apk update --no-cache \
+    && apk upgrade --no-cache \
+    && apk --no-cache --update add \
     ruby\
     ruby-irb\
     ruby-rake\
@@ -19,8 +18,10 @@ RUN apk update && apk upgrade && apk --update add \
     ca-certificates \
     libressl-dev \
     libressl\
-    build-base\
-    &&  echo 'gem: --no-document' > /etc/gemrc
+    build-base
+
+#setup ruby
+RUN echo 'gem: --no-document' > /etc/gemrc
 
 RUN bundle config build.nokogiri --use-system-libraries ;\
     bundle config git.allow_insecure true
@@ -28,7 +29,6 @@ RUN bundle config build.nokogiri --use-system-libraries ;\
 RUN gem install foreman --no-rdoc --no-ri;\
     gem cleanup
 
-RUN rm -rf /usr/lib/ruby/gems/*/cache/* ; \
-    rm -rf /var/cache/apk/* /tmp
+RUN rm -rf /usr/lib/ruby/gems/*/cache/*
 
 CMD ["irb"]
