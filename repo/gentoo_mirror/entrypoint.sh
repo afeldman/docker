@@ -3,7 +3,7 @@
 ## download data
 
 RSYNC="/usr/bin/rsync"
-OPTS="--quiet --recursive --links --perms --times -D --delete --timeout=300 --checksum"
+OPTS="--recursive --links --perms --safe-links --times --omit-dir-times --compress --stats --human-readable --progress --timeout=300 "
 
 echo "Started update at" `date`
 

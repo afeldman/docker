@@ -6,12 +6,12 @@ RUN apk update --no-cache \
        openssh
 
 #Uncomment the following line only if you have been granted access to masterportage.gentoo.org                                               
-#SRC='rsync://ftp-stud.hs-esslingen.de/gentoo/'
+#SRC='rsync://masterportage.gentoo.org/gentoo-portage'
 #If you are waiting for access to our master mirror, select one of our mirrors to mirror from:                                               
 #SRC="rsync://rsync.de.gentoo.org/gentoo-portage" # for Europe         
 #SRC="rsync://rsync.us.gentoo.org/gentoo-portage" # for the rest of the world
 
-ARG SRC="rsync://masterportage.gentoo.org/gentoo-portage"
+ARG SRC='rsync://ftp-stud.hs-esslingen.de/gentoo/'
 
 ENV SERVER=${SRC}
 ENV USER='gentoo_user'
