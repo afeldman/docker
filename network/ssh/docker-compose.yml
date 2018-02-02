@@ -1,0 +1,8 @@
+version: '3'
+services:
+  ssh:
+    build:
+      args:
+        USER: ssh
+      context: .
+    image: ssh:0.1
