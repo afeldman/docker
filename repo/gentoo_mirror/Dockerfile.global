@@ -1,0 +1,36 @@
+FROM afeldman/alpine
+
+RUN apk update --no-cache \
+    && apk add --no-cache \
+       rsync \
+       openssh
+
+#Uncomment the following line only if you have been granted access to masterportage.gentoo.org                                               
+#SRC='rsync://ftp-stud.hs-esslingen.de/gentoo/'
+#If you are waiting for access to our master mirror, select one of our mirrors to mirror from:                                               
+#SRC="rsync://rsync.de.gentoo.org/gentoo-portage" # for Europe         
+#SRC="rsync://rsync.us.gentoo.org/gentoo-portage" # for the rest of the world
+
+ARG SRC="rsync://masterportage.gentoo.org/gentoo-portage"
+
+ENV SERVER=${SRC}
+ENV USER='gentoo_user'
+ENV DST='/gentoo'
+
+ADD etc/rsyncd_global.conf /etc/rsyncd.conf
+ADD entrypoint.sh /entrypoint.sh
+
+RUN chmod 777 /entrypoint.sh
+
+RUN addgroup -g 1000 ${USER} \
+    && adduser -D -h /data -H -S -u 1000 -G ${USER} ${USER} \
+    && mkdir /data \
+    && chown ${USER}:${USER} /data
+
+WORKDIR ${DST}
+
+EXPOSE 873
+
+ENTRYPOINT ["/entrypoint.sh"]
+
+CMD ["rsyncd"]

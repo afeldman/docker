@@ -5,15 +5,9 @@ RUN apk update --no-cache \
        rsync \
        openssh
 
-ARG URL='rsync://ftp-stud.hs-esslingen.de/gentoo/'
-
-ENV SERVER=${URL}
-ENV USER='gentoo_user'
-
 ADD etc/rsyncd.conf /etc/rsyncd.conf
-ADD entrypoint.sh /entrypoint.sh
 
-RUN chmod 777 /entrypoint.sh
+ENV USER='gentoo_user'
 
 RUN addgroup -g 1000 ${USER} \
     && adduser -D -h /data -H -S -u 1000 -G ${USER} ${USER} \
@@ -24,6 +18,4 @@ WORKDIR /gentoo
 
 EXPOSE 873
 
-ENTRYPOINT ["/entrypoint.sh"]
-
-CMD ["rsyncd"]
+CMD ["/usr/bin/rsync","--no-detach","--daemon","--config","/etc/rsyncd.conf"]

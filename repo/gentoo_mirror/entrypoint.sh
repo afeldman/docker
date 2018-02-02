@@ -1,12 +1,20 @@
 #!/bin/sh
 
-rsync --recursive \
-      --links --safe-links \
-      --perms --times \
-      --omit-dir-times --compress\
-      --stats --human-readable\
-      --progress --timeout=180\
-      ${SERVER} /gentoo
+## download data
+
+RSYNC="/usr/bin/rsync"
+OPTS="--quiet --recursive --links --perms --times -D --delete --timeout=300 --checksum"
+
+echo "Started update at" `date`
+
+${RSYNC} ${OPTS} ${SERVER} ${DST}
+
+echo "End: "`date`
+
+
+
+
+############################## Start rsync service
 
 if [ "$1" = 'rsyncd' ]; then
     echo "[Run] Starting rsyncd"
