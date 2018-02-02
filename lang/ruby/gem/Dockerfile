@@ -1,12 +1,11 @@
 FROM afeldman/ruby:latest
 
-RUN echo http://mirror.yandex.ru/mirrors/alpine/edge/main > /etc/apk/repositories; \
-    echo http://mirror.yandex.ru/mirrors/alpine/edge/community >> /etc/apk/repositories;\
-    echo http://mirror.yandex.ru/mirrors/alpine/edge/testing >> /etc/apk/repositories
+ADD config/mirrorc /root/.gem/.mirrorrc
+ADD config/config.ru /root/.gem/mirror/config.ru
 
-RUN apk update && \
-    apk upgrade && \
-    apk add nginx
+RUN apk update --no-cache && \
+    apk upgrade --no-cache && \
+    apk add --no-cache nginx
 
 RUN gem update --system &&\
     gem install geminabox\
@@ -15,11 +14,5 @@ RUN gem update --system &&\
 VOLUME /data/rubygems
 EXPOSE 9292
 
-COPY config/.mirrorrc /root/.gem/.mirrorrc
-COPY config/config.ru /root/.gem/mirror/config.ru
+CMD ["gem","mirror"]
 
-RUN gem mirror
-
-WORKDIR /root/.gem/mirror
-
-CMD ["rackup"]
