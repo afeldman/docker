@@ -1,5 +1,13 @@
 #!/bin/sh
 
+rsync --recursive \
+      --links --safe-links \
+      --perms --times \
+      --omit-dir-times --compress\
+      --stats --human-readable\
+      --progress --timeout=180\
+      ${SERVER} /gentoo
+
 if [ "$1" = 'rsyncd' ]; then
     echo "[Run] Starting rsyncd"
 
