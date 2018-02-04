@@ -4,11 +4,11 @@ LABEL maintainer="anton Feldmann <anton.feldmann@gmail.com>"
 
 ARG REQUIRE="sudo build-base"
 
+ARG MPI_PACKAGES="openmpi openmpi-dev"
+
 RUN apk update --no-cache \
     && apk upgrade --no-cache \
-    && apk add openmpi openmpi-dev ${REQUIRE} --no-cache
-
-WORKDIR /mpi
+    && apk add ${MPI_PACKAGES} ${REQUIRE} --no-cache
 
 #### ADD DEFAULT USER ####
 ARG USER=mpi
