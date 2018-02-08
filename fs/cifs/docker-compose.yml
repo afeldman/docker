@@ -1,0 +1,15 @@
+version: '3'
+services:
+  cifs:
+    build:
+      context: .
+    image: cifs:0.1
+    privileged: true
+    pid: host
+    restart: unless-stopped
+    volumes:
+      - /mnt/SMB:${MOUNT_POINT}
+    environment:
+      - SERVER=<SMBSERVER>
+      - OPTIONS=''
+      - MOUNT_POINT=''
