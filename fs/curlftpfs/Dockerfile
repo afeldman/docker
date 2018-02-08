@@ -7,7 +7,12 @@ RUN apt-get install -y \
     curlftpfs
 
 WORKDIR /ftp
-
 VOLUME /ftp
 
-EXPOSE 21
+ENV FTP='localhost'
+ENV USER=''
+ENV PASSWORD=''
+ENV PORT=21
+
+EXPOSE ${PORT}
+
