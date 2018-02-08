@@ -1,0 +1,21 @@
+FROM afeldman/alpine
+
+RUN apk update --no-cache \
+    && apk add --no-cache \
+       rsync \
+       openssh
+
+ADD etc/rsyncd.conf /etc/rsyncd.conf
+
+ENV USER='gentoo_user'
+
+RUN addgroup -g 1000 ${USER} \
+    && adduser -D -h /data -H -S -u 1000 -G ${USER} ${USER} \
+    && mkdir /data \
+    && chown ${USER}:${USER} /data
+
+WORKDIR /gentoo
+
+EXPOSE 873
+
+CMD ["/usr/bin/rsync","--no-detach","--daemon","--config","/etc/rsyncd.conf"]
