@@ -17,12 +17,21 @@ node () {
 		}
 	    },
 	    "base":{
-		stage ("build"){
+		stage ("build ubuntu"){
 		    docker.build("ubuntu","base/ubuntu")
-		    docker.build("cuda","base/cude")
-		    docker.build("debian","base/debian")
+		    
+		};
+		stage ("build alpine") {
+		    docker.build("alpine:latest","base/alpine","--build-arg BASE=\"alpine:v3.7\"")
+		};
+		stage ("build gentoo"){
 		    docker.build("gentoo","base/gentoo")
-		    docker.build("alpine","base/alpine")
+		};
+		stage ("build cuda"){
+		    docker.build("cuda","base/cude")
+		};
+		stage ("build debian"){
+		    docker.build("debian","base/debian")
 		}
 	    }
 	)
