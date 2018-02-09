@@ -1,6 +1,4 @@
-pipeline {
-
-    agent none
+node {
     
     stages{
 	stage('Clone repository') {
@@ -8,7 +6,7 @@ pipeline {
 	}
 
 	stage('Build image') {
-      	    parallel (
+      	    parallel {
 		stage ('apps'){
 		    "copybirds": {
 			docker.build("copybirds","apps/copybirds")
@@ -22,7 +20,7 @@ pipeline {
 			docker.build("ubuntu","base/ubuntu")
 		    }
 		}
-	    )
+	    }
 	}
     }
 }
