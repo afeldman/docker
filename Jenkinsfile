@@ -1,4 +1,4 @@
-node () {
+node ('build my dockers') {
     
     stage('Clone repository') {
         checkout scm
@@ -18,9 +18,9 @@ node () {
 	    },
 	    "base":{
 		stage ("build ubuntu"){
-		    docker.build("ubuntu:latest","base/ubuntu","--build-arg BASE=\"ubuntu:latest\"")
-		    docker.build("ubuntu:16.04","base/ubuntu","--build-arg BASE=\"ubuntu:16.06\"")
-		    docker.build("ubuntu:14.04","base/ubuntu","--build-arg BASE=\"ubuntu:16.04\"")		    
+		    docker.build("ubuntu:latest","base/ubuntu","--build-arg BASE=ubuntu:latest")
+		    docker.build("ubuntu:16.04","base/ubuntu","--build-arg BASE=ubuntu:16.06")
+		    docker.build("ubuntu:14.04","base/ubuntu","--build-arg BASE=ubuntu:14.04")		    
 		};
 		stage ("build alpine") {
 		    docker.build("alpine:latest","base/alpine","--build-arg BASE=\"alpine:3.7\"","--build-arg VERSION=\"v3.7\"")
