@@ -13,6 +13,6 @@ RUN echo "jenkins ALL=NOPASSWD: ALL" >> /etc/sudoers
 
 ADD setup-docker-and-start-jenkins.sh /set_user_id.sh
 
-RUN chmod 777 /set_user_id.sh
+RUN chmod +x /set_user_id.sh
 
-USER jenkins
+CMD ["/set_user_id.sh"]
