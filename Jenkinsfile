@@ -5,10 +5,16 @@ node {
     }
 
    stage('Build image') {
-   	parallel{
+   	parallel (
+	  "copybirds": {
 		docker.build("copybirds","apps/copybirds")
+		},
+	  "alpine": {
 		docker.build("alpine","base/alpine")
+		},
+	  "ubuntu": {
 		docker.build("ubuntu","base/ubuntu")
-	}
+		}
+	)
    }
 }
