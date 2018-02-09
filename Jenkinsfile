@@ -8,12 +8,12 @@ node () {
       	parallel (
 	    "apps": {
 		stage ("build"){
-		    docker.build("copybirds","apps/copybirds")
-		    docker.build("beaverdam","apps/beaverdam")
 		    docker.build("jolici","apps/jolici")
+		    docker.build("copybirds","apps/copybirds")
+		    docker.build("nodered","apps/nodered")
+		    docker.build("beaverdam","apps/beaverdam")
 		    docker.build("labelImage","apps/labelImage")
 		    docker.build("matlab_runtime","apps/matlab_runtime")
-		    docker.build("nodered","apps/nodered")
 		}
 	    },
 	    "base":{
