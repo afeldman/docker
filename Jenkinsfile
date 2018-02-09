@@ -6,6 +6,9 @@ node {
     }
 
    stage('Build image') {
-   		docker.build("./apps/copybirds")
+      agent any
+      steps {
+        sh 'docker build -t apps/copybirds .'
+      }
    }
 }
