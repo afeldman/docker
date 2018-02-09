@@ -5,6 +5,6 @@ node {
     }
 
    stage('Build image') {
-   	docker.build("copybirds","apps/copybirds").withDockerServer('tcp://192.168.1.19:4243')
+   	docker.build("copybirds","apps/copybirds")
    }
 }
