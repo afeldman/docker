@@ -1,0 +1,33 @@
+version: '3'
+services:
+  ansible:
+    build:
+      context: .
+      args:
+        ANSIBLE_VERSION: 2.3.0.0
+        ANSIBLE_GATHERING: smart
+        ANSIBLE_HOST_KEY_CHECKING: "false"
+        ANSIBLE_RETRY_FILES_ENABLED: "false"
+        ANSIBLE_ROLES_PATH: /ansible/playbooks/roles
+        ANSIBLE_SSH_PIPELINING: "true"
+        ANSIBLE_PATH: /ansible/bin
+        PYTHONPATH: /ansible/lib
+        ANSIBLE_LIBRARY: /ansible/library
+        BUILD_PACKAGES: "bash \	   
+  	    		    curl \
+                            tar \
+                            openssh-client \
+                            sshpass \
+                            git \
+                            python \
+                            py-boto \
+                            py-dateutil \
+                            py-httplib2 \
+                            py-jinja2 \
+                            py-paramiko \
+                            py-pip \
+                            py-setuptools \
+                            py-yaml \
+                            ca-certificates"
+    volumes:
+      - /opt/docker/ansible:/ansible/playbooks

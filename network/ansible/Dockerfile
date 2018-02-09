@@ -1,35 +1,19 @@
 FROM afeldman/alpine
 
-ARGS ANSIBLE_VERSION 2.3.0.0
-ARGS ANSIBLE_GATHERING smart
-ARGS ANSIBLE_HOST_KEY_CHECKING false
-ARGS ANSIBLE_RETRY_FILES_ENABLED false
-ARGS ANSIBLE_ROLES_PATH /ansible/playbooks/roles
-ARGS ANSIBLE_SSH_PIPELINING True
-ARGS ANSIBLE_PATH /ansible/bin
-ARGS PYTHONPATH /ansible/lib
-ARGS ANSIBLE_LIBRARY /ansible/library
-ARGS BUILD_PACKAGES \
-  bash \	   
-  curl \
-  tar \
-  openssh-client \
-  sshpass \
-  git \
-  python \
-  py-boto \
-  py-dateutil \
-  py-httplib2 \
-  py-jinja2 \
-  py-paramiko \
-  py-pip \
-  py-setuptools \
-  py-yaml \
-  ca-certificates
+ARG ANSIBLE_VERSION
+ARG ANSIBLE_GATHERING
+ARG ANSIBLE_HOST_KEY_CHECKING
+ARG ANSIBLE_RETRY_FILES_ENABLED
+ARG ANSIBLE_ROLES_PATH
+ARG ANSIBLE_SSH_PIPELINING
+ARG ANSIBLE_PATH
+ARG PYTHONPATH
+ARG ANSIBLE_LIBRARY
+ARG BUILD_PACKAGES
  
 ENV BUILD_PACKAGES ${BUILD_PACKAGES}
  
-RUN apk --update add --virtual --no-cache build-dependencies \
+RUN apk --update add --virtual build-dependencies \
   gcc \
   musl-dev \
   libffi-dev \
