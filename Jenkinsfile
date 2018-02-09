@@ -5,6 +5,6 @@ node {
     }
 
    stage('Build image') {
-   		docker.build("apps/copybirds")
+   		docker.build("copybirds","apps/copybirds")
    }
 }
