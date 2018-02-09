@@ -7,7 +7,9 @@ node {
     }
 
     stage('Build image') {
-         app = docker.build("apps/copybirds")
+         withDockerServer([uri: "tcp://10.67.132.181:4243"]) {
+             app = docker.build("apps/copybirds")
+	 }
     }
 
     stage('Test image') {
