@@ -20,9 +20,14 @@ RUN cd /tmp && \
     cd / && \
     rm -rf /tmp/tdom-0.9.0*
 
+RUN mkdir -p /opt/tcl
+RUN mkdir -p /opt/data
+
 VOLUME /opt/tcl
 VOLUME /opt/data
 
 ENV TCLLIBPATH /opt/tcl /opt/tcl/lib
 
 ENTRYPOINT ["tclsh8.6"]
+
+#CMD ls -la /opt/tcl
