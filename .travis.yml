@@ -10,4 +10,4 @@ install:
   - docker run -d -p afeldman/ubuntu:latest -c "bash --version"
 
 script:
-  - docker ps | grep -q blog
+  - docker ps
