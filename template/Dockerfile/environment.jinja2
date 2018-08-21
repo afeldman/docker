@@ -1,0 +1,5 @@
+{% macro general(charset="C.UTF-8") %}
+ENV TERM="bash" \
+    LANG="{{ charset }}" \
+    LC_ALL="{{ charset }}"
+{% endmacro %}

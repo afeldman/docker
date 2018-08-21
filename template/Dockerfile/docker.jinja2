@@ -37,3 +37,7 @@ CMD ["{{ command }}"]
 {% macro run(command) %}
 RUN {{ command }}
 {% endmacro %}
+
+{% macro env(key,value)%}
+ENV {{key}} {{value}}
+{% endmacro %}

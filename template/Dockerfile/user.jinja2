@@ -1,7 +1,7 @@
-{%- macro user_ch(user) -%}
+{% macro user_ch(user) %}
 USER {{ user }}
-{%- endmacro -%}
+{% endmacro %}
 
-{%- macro user_add(user) -%}
-RUN useradd -r -u 1001 -g appuser appuser
-{%- endmacro -%}
+{% macro user_add(userid="1001", username="docker") %}
+RUN useradd -r -u {{ userid }} -g {{ username }} {{ username }}
+{% endmacro %}
