@@ -1,0 +1,55 @@
+{% macro label_maintainer(user) %}
+LABEL maintainer="{{ user }}"
+{% endmacro %}
+
+{% macro label_schema(version) %}
+LABEL org.label-schema.schema-version="{{ version or "1.0" }}"
+{% endmacro %}
+
+{% macro label_date(date) %}
+LABEL org.label-schema.build-date="{{ data or current_date() }}"
+{% endmacro %}
+
+{% macro label_name(user) %}
+  {% if user is not none %}
+LABEL org.label-schema.name="{{ user }}"
+  {% endif %}
+{% endmacro %}
+
+{% macro label_description(desc) %}
+LABEL org.label-schema.description="{{ desc or 'make a description' }}"
+{% endmacro %}
+
+{% macro label_url(url) %}
+  {% if url is not none %}
+LABEL org.label-schema.url="{{ url }}"
+  {% endif %}
+{% endmacro %}
+
+{% macro label_vcs(url) %}
+  {% if url is not none %}
+LABEL org.label-schema.vcs-url={{ url }}
+  {% endif %}
+{% endmacro %}
+
+{% macro label_vcs_ref(ref) %}
+  {% if ref is not none %}
+LABEL org.label-schema.vcs-ref={{ ref }}
+  {% endif %}
+{% endmacro %}
+
+{% macro label_ven(ven) %}
+  {% if ven is not none %}
+LABEL org.label-schema.vendor={{ ven }}
+  {% endif %}
+{% endmacro %}
+
+{% macro label_ver(ver) %}
+LABEL org.label-schema.version={{ ver or "0.1.0"}}
+{% endmacro %}
+
+{% macro label_docker_run(run) %}
+  {% if run is not none %}
+LABEL org.label-schema.docker.cmd={{ run }}
+  {% endif %}
+{% endmacro %}

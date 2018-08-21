@@ -1,0 +1,39 @@
+{% macro from(image, user, tag="latest") %}
+  {% if user is not none %}
+FROM {{ user }}/{{ image }}:{{ tag }}
+  {% else %}
+FROM {{ image }}:{{ tag }}
+  {% endif %}
+{% endmacro %}
+
+{% macro add(source, target) %}
+ADD {{ source }} {{ target }}
+{% endmacro %}
+
+{% macro copy(source, target) %}
+COPY {{ source }} {{ target }}
+{% endmacro %}
+
+{% macro expose(port) %}
+EXPOSE {{ port }}
+{% endmacro -%}
+
+{% macro workdir(path) %}
+WORKDIR {{ path }}
+{% endmacro -%}
+
+{% macro volume(volume) %}
+VOLUME {{ volume }}
+{% endmacro -%}
+
+{% macro entrypoint(command) %}
+ENTRYPOINT ["{{ command }}"]
+{% endmacro %}
+
+{% macro cmd(command) %}
+CMD ["{{ command }}"]
+{% endmacro %}
+
+{% macro run(command) %}
+RUN {{ command }}
+{% endmacro %}

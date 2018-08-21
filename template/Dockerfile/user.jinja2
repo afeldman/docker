@@ -1,0 +1,7 @@
+{%- macro user_ch(user) -%}
+USER {{ user }}
+{%- endmacro -%}
+
+{%- macro user_add(user) -%}
+RUN useradd -r -u 1001 -g appuser appuser
+{%- endmacro -%}
