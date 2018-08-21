@@ -6,7 +6,7 @@ services:
   - docker
 
 install:
-  - docker build -t afeldman/ubuntu:latest --build-arg BASE=ubuntu:latest -f base/ubuntu
+  - docker build -t afeldman/ubuntu:latest --build-arg BASE=ubuntu:latest -f base/ubuntu .
   - docker run -d -p afeldman/ubuntu:latest -c "bash --version"
 
 script:
