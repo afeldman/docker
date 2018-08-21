@@ -6,4 +6,4 @@ services:
   - docker
 
 script:
-  - docker build -t ubuntu:latest --build-arg BASE=ubuntu:latest -f base/ubuntu base/ubuntu
+  - docker build -t ubuntu:latest --build-arg BASE=ubuntu:latest -f base/ubuntu
